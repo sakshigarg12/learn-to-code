@@ -35,3 +35,26 @@ return newarray
 
 means store carry at first position
 
+//Day - 3
+Source - Neetcode 
+Topic : Binary Search
+Problem : Koko Eating Bananas
+In this problem, we are giving array of piles of bananas , and given the minimum time to eat those bananas now we have to find that how much banannas koko eat per hour so he can eat all piles of bananas within that given time , and in one hour he can eat only one pile of bananas if finish early then he has to wait that hour to finish to another pile on another hour.
+
+My Approach : 
+
+
+//Day- 4
+Source - Neetcode
+Topic : Binary Search
+Problem : Find Minimum in rotated sorted array
+In this problem,
+
+My Approach : 
+
+Source - Neetcode
+Topic : Binary Search
+Problem : Searching in Rotated Sorted Arrays
+In this problem,
+
+My Approach : 
