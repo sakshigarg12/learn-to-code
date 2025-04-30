@@ -42,6 +42,26 @@ Problem : Koko Eating Bananas
 In this problem, we are giving array of piles of bananas , and given the minimum time to eat those bananas now we have to find that how much banannas koko eat per hour so he can eat all piles of bananas within that given time , and in one hour he can eat only one pile of bananas if finish early then he has to wait that hour to finish to another pile on another hour.
 
 My Approach : 
+In this problem, we use binary search to efficiently find the minimum eating speed k (bananas/hour) at which Koko can finish all the bananas in h hours.
+We cannot try every value of k from 1 to max(piles) through brute force — it would be too slow.
+So we use binary search in the range [1, max(piles)].We define our binary search range:
+left = 1 (minimum possible eating speed),
+right = max(piles) (maximum speed — if Koko finishes a full pile in 1 hour).
+mid = (left + right) / 2 represents the current eating speed (bananas/hour).
+The more bananas Koko eats per hour (higher k), the less total time it takes.
+This is a monotonic decreasing function, so binary search works.
+For each mid (eating speed), we calculate the total hours Koko needs:
+
+for (int pile : piles) {
+    totalHours += (pile + mid - 1) / mid;  // ceiling division
+}
+We compare this totalHours with the given h
+if (totalHours <= h) {
+    ans = mid;         // possible answer, but maybe we can do better (lower k)
+    right = mid - 1;   // try smaller eating speed
+} else {
+    left = mid + 1;    // speed too slow, try higher
+}
 
 
 //Day- 4
@@ -51,6 +71,31 @@ Problem : Find Minimum in rotated sorted array
 In this problem,
 
 My Approach : 
+In this problem, we use binary search to efficiently find the minimum element in a rotated sorted array.
+We cannot linearly scan the entire array — it would take O(n) time.
+Instead, we use binary search to find the rotation point in O(log n) time.
+We define our binary search range:
+
+left = 0 (start of the array),
+right = nums.length - 1 (end of the array)
+We calculate:
+mid = (left + right) / 2 → this represents the middle index of our current search window.
+
+Now, based on the sorted + rotated structure, we observe:
+
+If nums[mid] > nums[right], it means the minimum lies in the right half (because the unsorted/rotated part is there)
+If nums[mid] <= nums[right], it means the minimum lies in the left half (including mid)
+This works because the array is made of two sorted halves, and the minimum is where the order breaks.
+We perform binary search as:
+while (left < right) {
+    int mid = left + (right - left) / 2;
+    if (nums[mid] > nums[right]) {
+        left = mid + 1;  // minimum is in the right half
+    } else {
+        right = mid;     // minimum is at mid or in the left half
+    }
+}
+Once left == right, we've found the index of the smallest element, and return nums[left].
 
 Source - Neetcode
 Topic : Binary Search
@@ -58,3 +103,32 @@ Problem : Searching in Rotated Sorted Arrays
 In this problem,
 
 My Approach : 
+In this problem, we use binary search to efficiently find the target element in a rotated sorted array.
+We cannot use linear search — that would take O(n) time.
+So we apply binary search in a smart way by observing how the rotation splits the array into two sorted halves.
+We define:
+
+left = 0 (start of the array)
+right = nums.length - 1 (end of the array)
+mid = (left + right) / 2 → midpoint of current search space
+At every step:
+
+Check if nums[mid] == target → return mid
+Otherwise, decide which half to search next using the sorted property:
+
+1️⃣ If the left half is sorted:
+if (nums[left] <= nums[mid]) {
+    if (nums[left] <= target && target < nums[mid]) {
+        right = mid - 1;  // Target lies in the sorted left half
+    } else {
+        left = mid + 1;   // Target lies in the right half
+    }
+}
+2️⃣ Else the right half is sorted:
+else {
+    if (nums[mid] < target && target <= nums[right]) {
+        left = mid + 1;   // Target lies in the sorted right half
+    } else {
+        right = mid - 1;  // Target lies in the left half
+    }
+}
