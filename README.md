@@ -135,6 +135,28 @@ else {
 
 
 //Day -6 
-Source - Neetcode
-Topic : Binary Search
-Problem : Time Based Key-Value Store
+Source - Leetcode
+Topic : Array
+Problem : Container With Most water 
+In this problem , we are given an array of heights of walls and we have to find maximum area among these walls that hold water.
+hence , we are using here two pointer approach , using two pointer we find the maximum area as it is very much time consuming to calculate area for every wall one by one .
+given height = [1,8,6,2,5,4,8,3,7]
+Approach : 
+lets take two pointer 
+left = 0 //starting index
+right = 8 //last index
+//we take this maxArea to every time compare it with finding area to get maximum area
+while(left < right){
+//for finding area we should know height and width of the wall
+//height is minimum between the height of two respected walls between them we are calculating area because mimimum height is the bottleneck upto that we can store water
+wallheight = Math.min(height[left], height[right])
+//width is the distance between two walls
+width = right - left
+area = wallheight* width
+//now find maximumarea
+maxArea = Math.max(maxArea, area)
+if(height[left] < height[right])
+//we always shift from minimum height because it might be possible that after that minimum height we got maximum height and if we shift from maximum height than there is no change in height it will be same
+left++
+else
+right--
