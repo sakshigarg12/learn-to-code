@@ -160,3 +160,52 @@ if(height[left] < height[right])
 left++
 else
 right--
+
+Source - Leetcode
+Topic: Arrays + Two Pointers
+Problem : 3Sum
+integer array nums, return all unique triplets [nums[i], nums[j], nums[k]] such that: i!=j, j!=k, i!=k , nums[i] + nums[j] + nums[k] == 0 .The solution must not contain duplicate triplets.
+The brute force approach uses 3 nested loops, resulting in O(n³) time complexity — which is too slow for large inputs.
+Instead, we can sort the array and use the two-pointer technique to find the remaining two numbers for each nums[i].
+
+Approach:
+Sort the array.
+Loop through each element i in the array:
+Skip duplicates for the fixed element.
+For each i, set two pointers:
+left = i + 1
+right = nums.length - 1
+While left < right:
+Calculate the sum: nums[i] + nums[left] + nums[right]
+If sum is zero, store the triplet and skip duplicates.
+If sum < 0 → increase left
+If sum > 0 → decrease right
+
+✅ Steps in Code:
+public List<List<Integer>> threeSum(int[] nums) {
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(nums); // Step 1: Sort the array
+    for (int i = 0; i < nums.length - 2; i++) {
+        // Step 2: Skip duplicate elements
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        int left = i + 1;
+        int right = nums.length - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == 0) {
+                // Found a valid triplet
+                res.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                // Skip duplicates for left and right
+                while (left < right && nums[left] == nums[left + 1]) left++;
+                while (left < right && nums[right] == nums[right - 1]) right--;
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++; // Increase the sum
+            } else {
+                right--; // Decrease the sum
+            }
+        }
+    }
+    return res;
+}
