@@ -209,3 +209,68 @@ public List<List<Integer>> threeSum(int[] nums) {
     }
     return res;
 }
+
+DATE : 05-07-2025
+----------------------------------------------------------------------------LOVE BABBAR DSA SHEET ---------------------------------------------------------------------------
+	
+Given an array which consists of only 0, 1 and 2. Sort the array without using any sorting algo
+
+approach : brute force
+1. we count the number of 0's, 1's, 2's
+2. we add them in array in a sorted order according to their count
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int count0 = 0;
+        int count1 = 0;
+        int count2 = 0;
+        for(int i = 0; i<nums.length; i++){
+            if(nums[i] == 0) count0++;
+            else if(nums[i] == 1) count1++;
+            else count2++;
+        }   
+        int ind = 0;
+        for(int i = 0; i<count0; i++){
+            nums[ind++]= 0;
+        }
+        for(int i = 0; i<count1; i++){
+            nums[ind++]= 1;
+        }
+        for(int i = 0; i<count2; i++){
+            nums[ind++]= 2;
+        }
+    }
+}
+
+approach optimal  : DNF Algorithm (Dutch national flag algorithm)
+here we solve the problem in one way only
+1.3 pointers we use namely low, mid and high
+2. while low mid point at 0 high point at last position 
+basically , according to vision array divides into 3 parts low mid and high if we get 0 it inserts in between 0 to low-1
+1 is in low to mid-1 and our unsorted array left between mid to high part which become empty and from high third value is present
+
+code : 
+class Solution {
+    public void sortColors(int[] nums) {
+        int low = 0;
+        int mid= 0;
+        int high = nums.length - 1;
+        while(mid <= high){
+            if(nums[mid] == 0){
+                swap(nums, mid, low);
+                mid++;
+                low++;
+            }
+            else if(nums[mid] == 1) mid++;
+            else{
+                swap(nums, mid, high);
+                high--;
+            }
+        }
+    }
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
