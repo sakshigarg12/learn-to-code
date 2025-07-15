@@ -245,8 +245,8 @@ class Solution {
 approach optimal  : DNF Algorithm (Dutch national flag algorithm)
 here we solve the problem in one way only
 1.3 pointers we use namely low, mid and high
-2. while low mid point at 0 high point at last position 
-basically , according to vision array divides into 3 parts low mid and high if we get 0 it inserts in between 0 to low-1
+2. while low, mid point at 0 high point at last position 
+basically , according to vision array divides into 3 parts low, mid and high if we get 0 it inserts in between 0 to low-1
 1 is in low to mid-1 and our unsorted array left between mid to high part which become empty and from high third value is present
 
 code : 
@@ -284,7 +284,7 @@ Explanation: The subarray [4,-1,2,1] has the largest sum 6.
 
 Approach:
 --------
-Brute force : 
+1. Brute force : 
 we used two loops o(n^2) approach in which we are using two for loops and checking the sum of each and every subarray and return the maximum subarray sum
 like [-2,1,-3,4,-1,2,1,-5,4]
 let start = 0
@@ -311,6 +311,79 @@ code :
         return maxsum;
     }
 
-Optimal Approach :
+2. Optimal Approach :
 
-Kadane's Algoirthm : 
+Kadane's Algoirthm : In this algo , we optimised our approach as we know our array may contain both the numbers negative and positive and in brute approach we are adding all elements of all the subarrays without bothering about positive and negative but in optimised approach when we get any bigger negative we donot add it because it decrease the number or make it negative that's why atlast we add a condition that if sum of the subarray is less than 0 then sum becomes 0 or we reinitialize it then continue till end with same process until we get maximum sum and maximum sum we maintain also till the end we initialize it with minimum integer value and return it with maximum value at end
+
+code : 
+public int maxSubArray(int[] nums) {
+        int maxsum = Integer.MIN_VALUE;
+        int currsum = 0;
+        for(int i = 0; i<nums.length; i++){
+            currsum += nums[i];
+            maxsum = Math.max(currsum, maxsum);
+            if(currsum < 0){
+                currsum = 0;
+            }
+        }
+        return maxsum;
+}
+
+Move all negative elements to end
+
+code:
+public void segregateElements(int[] arr) {
+        // Your code goes here
+        int[] temp = new int[arr.length];
+        int index = 0;
+        for(int i=0; i<arr.length; i++){
+            if(arr[i] >= 0){
+                temp[index++] = arr[i];
+            }
+        }
+        for(int i=0; i<arr.length; i++){
+            if(arr[i] < 0){
+                temp[index++] = arr[i];
+            }
+        }
+        for(int i=0; i<arr.length; i++){
+            arr[i] = temp[i];
+        }
+    }
+	
+Find the maximum and minimum element in an array
+
+code: 
+public Pair<Integer, Integer> getMinMax(int[] arr) {
+        // Code Here
+        // if(arr.length == 0 || arr == null) return 0;
+        int min = arr[0];
+        int max = arr[0];
+	for(int i = 1; i<arr.length; i++){
+            if(arr[i] < min) min = arr[i];
+            if(arr[i] > max) max = arr[i];
+        }
+        return new Pair<>(min, max);
+    }
+	
+Find the "Kth" max and min element of an array
+
+Concept : Using Priority Queues we find maximum kth element in an array using min heap and we find minimum kth element in an array using max heap and maxheap we initialize using priority queue from collections using reverseOrder method because bydefalult priority queue initialize minheap
+
+public static int kthSmallest(int[] arr, int k) {
+        // Your code here
+       PriorityQueue<Integer> maxheap = new PriorityQueue<>(Collections.reverseOrder());
+       for(int i = 0; i<arr.length; i++){
+          maxheap.add(arr[i]);
+	  if(maxheap.size() > k){
+              maxheap.poll();
+          }
+      }
+      return maxheap.peek();
+    }
+      
+          
+          
+      
+
+
