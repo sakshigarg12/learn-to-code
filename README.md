@@ -274,3 +274,43 @@ class Solution {
         nums[j] = temp;
     }
 }
+
+Maximum Subarray Sum (Kadane's Algorithm)
+
+Given an integer array nums, find the subarray with the largest sum, and return its sum
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+Approach:
+--------
+Brute force : 
+we used two loops o(n^2) approach in which we are using two for loops and checking the sum of each and every subarray and return the maximum subarray sum
+like [-2,1,-3,4,-1,2,1,-5,4]
+let start = 0
+cursum = 0 maxsum = 0
+-2 -2+1 -2+1+-3  -2+1+-3+4  -2+1+-3+4+-1 -2+1+-3+4+-1+2+1+-5 -2+1+-3+4+-1+2+1+-5+4  
+so lets cursum = 0 
+currsum = -2 maxsum = math.max(-2, 0)= 0
+here maxsum= 1 for [-2,1,-3,4,-1,2,1,-5,4]
+then start = 1 , here we start from 1 to end 
+same for all subarrays 
+
+code : 
+ int maxSubarraySum(int[] arr) {
+        // Code here
+        int n = arr.length;
+        int maxsum = 0;
+        for(int start = 0; start < n;start++){
+            int cursum = 0;
+            for(int end  = start; end < n ;end++){
+                cursum += arr[end];
+                maxsum = Math.max(cursum, maxsum);
+            }
+        }
+        return maxsum;
+    }
+
+Optimal Approach :
+
+Kadane's Algoirthm : 
