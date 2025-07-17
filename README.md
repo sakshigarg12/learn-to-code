@@ -381,9 +381,51 @@ public static int kthSmallest(int[] arr, int k) {
       }
       return maxheap.peek();
     }
-      
-          
-          
-      
 
+
+date : 17-07-2025
+
+Learnt about shell sort through problem Merge two sorted arrays without using extra space 
+Actually in this question we sort the array with variable gap and gap we defined as the distance between two elements to compare them for sorting 
+
+if we apply brute force approach we require extra space or extra array where we store two arrays together after sorting them then transefer them in their respective spaces 
+hence it is not valid as question demands no extra space
+
+optimised approach : gap method or shell sort 
+
+code : 
+    public void mergeArrays(int a[], int b[]) {
+        // code here
+        int n = a.length;
+        int m = b.length;
+        int gap = nextGap(n+m);
+        while(gap > 0){
+            int i = 0;
+            int j = gap;
+        	while(j < (n+m)){
+                int first = get(a, b, n, i);
+                int second = get(a, b, n, j);
+                if(first > second){
+                    set(a,b,n,i,second);
+                    set(a,b,n,j,first);
+                }
+                i++;
+                j++;
+            }
+            gap = nextGap(gap);
+        }
+    }   
+    public int nextGap(int gap){
+        if(gap <= 1) return 0;
+        return (gap/2) + (gap%2);
+    }
+    public int get(int[] a, int[] b, int n, int index){
+        if(index < n) return a[index];
+        return b[index - n];
+    }  
+    public void set(int[] a, int[] b, int n, int index, int value){
+        if(index < n) a[index] = value;
+        else b[index - n] = value;
+        
+    }
 
