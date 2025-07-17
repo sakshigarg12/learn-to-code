@@ -414,15 +414,18 @@ code :
             }
             gap = nextGap(gap);
         }
-    }   
+    }  
+    **it is the method where we find the gap**
     public int nextGap(int gap){
         if(gap <= 1) return 0;
         return (gap/2) + (gap%2);
     }
+    **Using this method we get the element from index**
     public int get(int[] a, int[] b, int n, int index){
         if(index < n) return a[index];
         return b[index - n];
-    }  
+    } 
+    **Using this method we set the element at the index after sorting**
     public void set(int[] a, int[] b, int n, int index, int value){
         if(index < n) a[index] = value;
         else b[index - n] = value;
