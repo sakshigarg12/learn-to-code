@@ -432,3 +432,40 @@ code :
         
     }
 
+date : 21-07-25
+
+Find the duplicate without using extra space
+
+using slow and fast pointer approach because as we use set it take space hence , by using slow and fast pointer approach which is commonly used in linkedlist to find the cycle here in array we used it as imagining array as linkedlist
+
+Approach : In this approach , we use two pointer starting from same initial index in this question as we have array we treat index as node and element as next node we increment slow pointer by one and fast pointer by two and repeat this until slow equals fast then again initialize slow with initial index and here slow and fast increment by one until slow equals fast , atlast they both were pointing at the element where the cycle starts or which is duplicate
+
+basically let array : 3,1,3,2,4 
+slow = fast = 3 at index 0
+slow = arr[3] = 2 -> arr[2] = 3
+fast = arr[arr[3]] = arr[2] = 3 -> arr[arr[3]] = arr[2] = 3
+till slow != fast
+now slow = fast = 3
+
+2. slow = arr[0]  = 3
+while(slow != fast)
+slow = arr[3] = 2
+fast = arr[fast] = 2
+
+
+public int findDuplicate(int[] nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+	do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        while(slow != fast);
+        slow = nums[0];
+]
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
