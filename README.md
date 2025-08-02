@@ -469,3 +469,93 @@ public int findDuplicate(int[] nums) {
         }
         return slow;
     }
+
+
+----------------------------------MINIMUM JUMPS ----------------------------------------------------------------------------------------
+
+You are given an array arr[] of non-negative numbers. Each number tells you the maximum number of steps you can jump forward from that position.
+
+For example:
+
+If arr[i] = 3, you can jump to index i + 1, i + 2, or i + 3 from position i.
+If arr[i] = 0, you cannot jump forward from that position.
+Your task is to find the minimum number of jumps needed to move from the first position in the array to the last position.
+
+Note:  Return -1 if you can't reach the end of the array.
+
+Approach : 
+In this question , my main logic is to add that value of index with index that we want to jump of then made the currentend to point that farthest distance and if currentend is greater than or equal to its last second index than we reached at end and always increase jump when currentend is equal to index
+
+jump, currentend, farthest = 0
+farthest is the value which always updated according to value of index and we take check it with previous value of farthest it keeps us updated of how number of jumps
+
+//base case
+if(array.length == 0 || array[0] == 0) return 0
+for(i=0 to n-1)
+farthest = max(farthest, array[i]+i)
+if(i == currentend)
+jumps+1
+currentend = farthest
+if(currentend <= i)return -1
+return currentend >= n-1 ? jump : -1
+
+arr = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+
+📌 Key Variables:
+jumps: total jumps made so far
+currentEnd: the end of the current jump range
+farthest: farthest index reachable so far from current position
+
+✅ Initial State:
+jumps = 0
+currentEnd = 0
+farthest = 0
+
+🔁 Loop over i = 0 to n - 2 (0 to 9):
+i = 0
+arr[i] = 1
+farthest = max(0, 0 + 1) = 1
+i == currentEnd (0 == 0), so:
+jumps = 1
+currentEnd = 1
+
+✅ State: jumps = 1, currentEnd = 1, farthest = 1
+
+i = 1
+arr[i] = 3
+farthest = max(1, 1 + 3) = 4
+i == currentEnd (1 == 1), so:
+jumps = 2
+currentEnd = 4
+
+✅ State: jumps = 2, currentEnd = 4, farthest = 4
+
+i = 2
+arr[i] = 5
+farthest = max(4, 2 + 5) = 7
+i != currentEnd → no jump
+
+✅ State: jumps = 2, currentEnd = 4, farthest = 7
+
+i = 3
+arr[i] = 8
+farthest = max(7, 3 + 8) = 11
+i != currentEnd → no jump
+
+✅ State: jumps = 2, currentEnd = 4, farthest = 11
+
+i = 4
+arr[i] = 9
+farthest = max(11, 4 + 9) = 13
+i == currentEnd (4 == 4), so:
+jumps = 3
+currentEnd = 13
+
+✅ State: jumps = 3, currentEnd = 13, farthest = 13
+
+🛑 Loop ends (i reaches 9)
+We check:
+if currentEnd >= n - 1 → 13 >= 10 → ✅
+
+✅ Final Output:
+return jumps → 3
