@@ -1,0 +1,46 @@
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
+
+Explanation : 
+in this question, we are given the stocks according to respective days 
+so, one has to buy the stocks and sell them on the other day 
+so we have to find the maximum profit 
+like [7,6,4,3,1] some one buy it on day 2 and sell it on day 4 
+so, they will be facing loss of rs.3 
+and if  [7,1,5,3,6,4] they buy it on day 3 and sold it on day 5 now the profit of rs.1
+actually in this case [7,6,4,3,1] they are in decreasing so there will be no profit of selling the stock 
+
+code : 
+public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for(int price : prices){
+            if(price <  minPrice){
+                minPrice = price;
+            }
+            else if(price - minPrice > maxProfit){
+                maxProfit = price - minPrice;
+            }
+        }
+        return maxProfit;
+    }
